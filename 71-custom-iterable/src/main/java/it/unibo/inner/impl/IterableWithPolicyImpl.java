@@ -14,9 +14,10 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T> {
     /**
      * Iterates over all the elements.
      * The default policy is to take all the elements.
+     *
      * @param elements the elements to iterate over.
      */
-    public IterableWithPolicyImpl(T[] elements) {
+    public IterableWithPolicyImpl(final T[] elements) {
         this(
             elements,
             new Predicate<>() {
@@ -33,13 +34,13 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T> {
      * @param elements the elements to iterate over.
      * @param filter the filter to apply.
      */
-    public IterableWithPolicyImpl(T[] elements, Predicate<T> filter) {
+    public IterableWithPolicyImpl(final T[] elements, final Predicate<T> filter) {
         this.elements = List.of(elements);
         this.filter = filter;
     }
 
     @Override
-    public void setIterationPolicy(Predicate<T> filter) {
+    public void setIterationPolicy(final Predicate<T> filter) {
         this.filter = filter;
     }
 
@@ -50,13 +51,7 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T> {
 
     @Override
     public String toString() {
-        var sb = new StringBuilder();
-        sb.append("[");
-        for (var elem : this) {
-            sb.append(elem + ", ");
-        }
-        sb.append("]");
-        return sb.toString();
+        return elements.toString();
     }
 
     private class FilterIterator implements Iterator<T> {
@@ -65,7 +60,7 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T> {
         @Override
         public boolean hasNext() {
             while (currentIndex < elements.size()) {
-                T elem = elements.get(currentIndex);
+                final T elem = elements.get(currentIndex);
                 if (filter.test(elem)) {
                     return true;
                 }
