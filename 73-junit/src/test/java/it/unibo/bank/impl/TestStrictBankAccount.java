@@ -51,9 +51,12 @@ class TestStrictBankAccount {
      */
     @Test
     public void testManagementFees() {
+        assertEquals(0, bankAccount.getTransactionsCount());
         bankAccount.deposit(mRossi.getUserID(), AMOUNT);
+        assertEquals(1, bankAccount.getTransactionsCount());
         final double expected = bankAccount.getBalance() - (bankAccount.getTransactionsCount() * TRANSACTION_FEE + MANAGEMENT_FEE);
         bankAccount.chargeManagementFees(mRossi.getUserID());
+        assertEquals(0, bankAccount.getTransactionsCount());
         assertEquals(expected, bankAccount.getBalance());
         //fail("To be implemented");
     }
